@@ -34,16 +34,18 @@ def dijkstra(grafo, inicio, objetivo):
     camino = []
     calles_camino = []
     nodo_actual = objetivo
+    distancia_total = 0  # Inicializamos la distancia total en cero
     while nodo_actual != inicio:
         camino.insert(0, nodo_actual)
         for vecino, peso, calle in grafo[nodo_actual]:
             if distancias[nodo_actual] == distancias[vecino] + peso:
                 nodo_actual = vecino
-                calles_camino.insert(0, calle)  # Agregar la calle al inicio de la lista
+                calles_camino.insert(0, calle)
+                distancia_total += peso  # Acumulamos el peso de la arista en la distancia total
                 break
 
     camino.insert(0, inicio)
-    return camino, calles_camino
+    return camino, calles_camino, distancia_total
 def graficar_grafo(grafo):
     # Crear un grafo de networkx
     G = nx.Graph()
@@ -207,20 +209,32 @@ def crear_grafo():
     agregar_arista(grafo, 'z', 't', 70,'C')
     return grafo
 
-
-# Ejemplo de uso
 if __name__ == "__main__":
     # Crear el grafo
+    listadenodos=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a1','a2','a3','a4','a5','a6','a7','a8']
     grafo = crear_grafo()
     graficar_grafo(grafo)
-    inicio = 'a3'
-    objetivo = 'a'
-    camino_mas_corto, calles_camino = dijkstra(grafo, inicio, objetivo)
-
-    # Imprimir el camino más corto
-    print(f"Camino más corto desde el nodo '{inicio}' al nodo '{objetivo}': {camino_mas_corto}")
-    graficar_grafo_con_camino(grafo,camino_mas_corto)
-    # Imprimir las calles por las que pasa el camino más corto
-    print("Calles por las que pasa el camino más corto:")
-    for calle in calles_camino:
-        print(calle)
+    i=0
+    j=0
+    print('Si desea terminar el proceso solo escriba Fin en cualquiera de los campos para terminar el proceso')
+    while(i!='Fin' and j!='Fin'):
+            lista=[]
+            print("////////////////////////////////////////////////////////////////")
+            i=str(input('¿Cuál es el punto inicial donde quiere empezar el recorrido? '))
+            j=str(input('¿Cuál es el punto final donde terminará? '))
+            if(i in listadenodos and j in listadenodos):
+                camino_mas_corto, calles_camino, peso_total = dijkstra(grafo, i, j)
+                print(f"Camino más corto desde el nodo '{i}' al nodo '{j}': {camino_mas_corto}")
+                graficar_grafo_con_camino(grafo,camino_mas_corto)
+                # Imprimir las calles por las que pasa el camino más corto
+                print("Calles por las que pasa el camino más corto:")
+                for i in range(len(calles_camino)):
+                    if(calles_camino[i] not in lista):
+                        lista.append(calles_camino[i])
+                for calle in lista:
+                    print(calle)
+                print("////////////////////////////////////////////////////////////////")
+                print(f"Peso total del recorrido: {peso_total}")
+                print("////////////////////////////////////////////////////////////////")
+            else:
+                pass
