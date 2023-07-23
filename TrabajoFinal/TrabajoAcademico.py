@@ -208,7 +208,6 @@ def crear_grafo():
     agregar_arista(grafo, 't', 'o', 79,'C')
     agregar_arista(grafo, 'z', 't', 70,'C')
     return grafo
-
 if __name__ == "__main__":
     # Crear el grafo
     listadenodos=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a1','a2','a3','a4','a5','a6','a7','a8']
